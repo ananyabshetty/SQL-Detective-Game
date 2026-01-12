@@ -174,22 +174,6 @@ SQL Based Detective Game/
 
 ---
 
-## 📝 Resume Bullet Points
-
-> Use these to highlight this project on your resume:
-
-- **Designed and built** an interactive SQL learning game with 7 progressive levels covering SELECT, JOINs, aggregations, subqueries, CTEs, and window functions
-
-- **Implemented secure SQL execution engine** with query validation, read-only database connections, and SQL injection prevention
-
-- **Created immersive 3D environment** using Three.js with interactive objects, dynamic lighting, and atmospheric effects
-
-- **Developed Flask REST API** for query execution, answer validation, and player progress tracking with session management
-
-- **Architected database schema** with 7 tables modeling realistic crime investigation data including suspects, phone records, bank transactions, and CCTV logs
-
----
-
 ## 🔮 Future Enhancements
 
 - [ ] Sound effects and ambient audio
@@ -208,11 +192,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
 
 <div align="center">
 
