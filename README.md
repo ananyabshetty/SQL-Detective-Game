@@ -15,6 +15,17 @@
 
 ---
 
+## 🖼️ Screenshots
+
+<div align="center">
+
+![SQL Detective Game Screenshot](docs/screenshot.png)
+
+*Immersive 3D detective office with interactive objects, atmospheric lighting, and SQL terminal*
+
+</div>
+
+
 ## 📖 Overview
 
 SQL Detective is an interactive game that teaches SQL through crime investigation. Players take on the role of a data detective, solving a bank heist by querying realistic crime databases in an immersive 3D noir environment.
@@ -77,8 +88,8 @@ SQL Detective is an interactive game that teaches SQL through crime investigatio
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/sql-detective-game.git
-   cd sql-detective-game
+   git clone https://github.com/ananyabshetty/SQL-Detective-Game.git
+   cd SQL-Detective-Game
    ```
 
 2. **Install Python dependencies**
