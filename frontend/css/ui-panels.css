@@ -1,0 +1,523 @@
+/* SQL Detective Game - UI Panels Styles */
+
+/* ============================================
+   Story Panel (Case File)
+   ============================================ */
+#story-panel {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 700px;
+    max-height: 80vh;
+}
+
+#story-panel.hidden {
+    transform: translate(-50%, -50%) translateY(20px);
+}
+
+.case-number {
+    display: inline-block;
+    background: var(--accent-gold);
+    color: var(--bg-dark);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-lg);
+}
+
+.story-text {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-xl);
+    white-space: pre-line;
+}
+
+.objective-box {
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    border-left: 4px solid var(--accent-green);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-lg);
+}
+
+.objective-box h3 {
+    color: var(--accent-green);
+    font-size: 0.85rem;
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.05em;
+}
+
+.objective-box p {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.concepts-box {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius);
+}
+
+.concepts-box h3 {
+    color: var(--accent-cyan);
+    font-size: 0.85rem;
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.05em;
+}
+
+#sql-concepts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.concept-tag {
+    display: inline-block;
+    background: rgba(34, 211, 238, 0.15);
+    color: var(--accent-cyan);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: 20px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    border: 1px solid rgba(34, 211, 238, 0.3);
+}
+
+/* ============================================
+   Evidence Panel (Tables)
+   ============================================ */
+#evidence-panel {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+}
+
+#evidence-panel.hidden {
+    transform: translate(-50%, -50%) translateY(20px);
+}
+
+.evidence-intro {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.tables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.table-card {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.table-card:hover {
+    border-color: var(--accent-gold);
+    background: rgba(212, 165, 116, 0.05);
+    transform: translateY(-2px);
+}
+
+.table-card.active {
+    border-color: var(--accent-gold);
+    box-shadow: var(--glow-gold);
+}
+
+.table-card-icon {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.table-card-name {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--accent-gold);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.table-card-desc {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* Table Preview */
+.table-preview {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+    animation: fadeIn 0.3s ease;
+}
+
+.table-preview h3 {
+    color: var(--accent-gold);
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.table-preview h3 span {
+    font-family: var(--font-mono);
+}
+
+#table-schema {
+    margin-bottom: var(--spacing-lg);
+}
+
+.schema-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.schema-table th {
+    text-align: left;
+    padding: var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text-secondary);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.schema-table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.schema-table .col-name {
+    font-family: var(--font-mono);
+    color: var(--accent-cyan);
+}
+
+.schema-table .col-type {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
+.schema-table .col-pk {
+    color: var(--accent-gold);
+}
+
+#table-sample h4 {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.sample-table-wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.sample-table {
+    min-width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+}
+
+.sample-table th {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--accent-gold);
+    padding: var(--spacing-sm);
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--accent-gold-dim);
+}
+
+.sample-table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ============================================
+   Locked Level Indicators
+   ============================================ */
+.locked-indicator {
+    position: relative;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.locked-indicator::after {
+    content: '🔒';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+}
+
+/* ============================================
+   Level Select Modal
+   ============================================ */
+.level-select-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+.level-select-item {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.level-select-item:hover:not(.locked) {
+    border-color: var(--accent-gold);
+    transform: translateY(-2px);
+}
+
+.level-select-item.completed {
+    border-color: var(--accent-green);
+    background: rgba(74, 222, 128, 0.05);
+}
+
+.level-select-item.locked {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.level-select-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: var(--spacing-sm);
+}
+
+.level-select-item.completed .level-select-number {
+    color: var(--accent-green);
+}
+
+.level-select-item.completed .level-select-number::after {
+    content: ' ✓';
+}
+
+.level-select-title {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   New Modals Styles
+   ============================================ */
+
+/* Level Select Modal */
+.level-select-modal {
+    max-width: 600px;
+}
+
+.levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.level-card {
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.level-card:hover:not(.locked) {
+    border-color: var(--accent-gold);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(212, 165, 116, 0.2);
+}
+
+.level-card.completed {
+    border-color: var(--accent-green);
+    background: rgba(74, 222, 128, 0.08);
+}
+
+.level-card.current {
+    border-color: var(--accent-cyan);
+    background: rgba(34, 211, 238, 0.08);
+}
+
+.level-card.locked {
+    opacity: 0.4;
+    cursor: not-allowed;
+    filter: grayscale(50%);
+}
+
+.level-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: var(--spacing-sm);
+}
+
+.level-card.completed .level-number {
+    color: var(--accent-green);
+}
+
+.level-card.current .level-number {
+    color: var(--accent-cyan);
+}
+
+.level-title {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.level-status {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* About Modal */
+.about-modal {
+    max-width: 500px;
+}
+
+.about-content {
+    text-align: left;
+    margin: var(--spacing-lg) 0;
+}
+
+.about-content p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
+}
+
+.about-content h3 {
+    color: var(--accent-gold);
+    font-size: 0.95rem;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.about-content ul {
+    color: var(--text-secondary);
+    padding-left: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.about-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Progress Modal */
+.progress-modal {
+    max-width: 500px;
+}
+
+.progress-details {
+    margin: var(--spacing-lg) 0;
+}
+
+.progress-summary {
+    margin-bottom: var(--spacing-xl);
+}
+
+.progress-bar-container {
+    background: var(--bg-tertiary);
+    border-radius: 10px;
+    height: 20px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-sm);
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.progress-levels {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.progress-level {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.progress-level.completed {
+    border-color: var(--accent-green);
+    background: rgba(74, 222, 128, 0.05);
+}
+
+.progress-level.current {
+    border-color: var(--accent-cyan);
+    background: rgba(34, 211, 238, 0.05);
+}
+
+.progress-level-num {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-dark);
+    border-radius: 50%;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-right: var(--spacing-md);
+}
+
+.progress-level.completed .progress-level-num {
+    color: var(--accent-green);
+}
+
+.progress-level.current .progress-level-num {
+    color: var(--accent-cyan);
+}
+
+.progress-level-title {
+    flex: 1;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.progress-level-status {
+    font-size: 1.1rem;
+}

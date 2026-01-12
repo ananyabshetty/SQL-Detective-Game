@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Detective - Analytics Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/analytics/css/dashboard.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <span class="logo">🔍</span>
+            <h1>SQL Detective Analytics</h1>
+            <span class="badge">ADMIN</span>
+        </div>
+        <nav class="header-nav">
+            <a href="/" class="nav-link">← Back to Game</a>
+            <button id="refresh-btn" class="btn-refresh">↻ Refresh</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" data-tab="suspects">🎯 Suspect Intelligence</button>
+            <button class="tab-btn" data-tab="timeline">⏱️ Time Analysis</button>
+            <button class="tab-btn" data-tab="players">📊 Player Analytics</button>
+            <button class="tab-btn" data-tab="config">⚙️ Configuration</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Suspect Intelligence Tab -->
+            <section id="suspects-tab" class="tab-panel active">
+                <div class="section-header">
+                    <h2>Suspect Intelligence Engine</h2>
+                    <p>Rule-based suspect ranking using behavioral signals</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Top Suspects Cards -->
+                    <div class="card span-3">
+                        <h3>🏆 Top 3 Suspects</h3>
+                        <div id="top-suspects" class="top-suspects-grid">
+                            <div class="loading">Loading...</div>
+                        </div>
+                    </div>
+
+                    <!-- Suspicion Score Chart -->
+                    <div class="card span-2">
+                        <h3>📊 Score Breakdown</h3>
+                        <div class="chart-container">
+                            <canvas id="suspect-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Score Legend -->
+                    <div class="card span-1">
+                        <h3>🔑 Score Components</h3>
+                        <div class="legend">
+                            <div class="legend-item">
+                                <span class="dot" style="background: rgba(255, 99, 132, 0.7)"></span>
+                                Criminal Record (25 pts)
+                            </div>
+                            <div class="legend-item">
+                                <span class="dot" style="background: rgba(54, 162, 235, 0.7)"></span>
+                                Crime Window Calls (15 pts/call)
+                            </div>
+                            <div class="legend-item">
+                                <span class="dot" style="background: rgba(255, 206, 86, 0.7)"></span>
+                                High Transactions (10 pts)
+                            </div>
+                            <div class="legend-item">
+                                <span class="dot" style="background: rgba(75, 192, 192, 0.7)"></span>
+                                CCTV at Bank (20 pts)
+                            </div>
+                            <div class="legend-item">
+                                <span class="dot" style="background: rgba(153, 102, 255, 0.7)"></span>
+                                Call Volume (5 pts)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Full Rankings Table -->
+                    <div class="card span-3">
+                        <h3>📋 Full Rankings</h3>
+                        <div class="table-wrapper">
+                            <table id="rankings-table" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Name</th>
+                                        <th>Occupation</th>
+                                        <th>Criminal</th>
+                                        <th>Crime Calls</th>
+                                        <th>High Trans</th>
+                                        <th>CCTV</th>
+                                        <th>Total Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="8" class="loading">Loading...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Time Analysis Tab -->
+            <section id="timeline-tab" class="tab-panel">
+                <div class="section-header">
+                    <h2>Time-Based Behavioral Analysis</h2>
+                    <p>Analyzing activity patterns before, during, and after the crime</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Hourly Activity Chart -->
+                    <div class="card span-3">
+                        <h3>📈 Hourly Activity - March 15, 2024</h3>
+                        <div class="chart-container large">
+                            <canvas id="hourly-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Before/After Comparison -->
+                    <div class="card span-2">
+                        <h3>↔️ Before vs After Crime</h3>
+                        <div class="chart-container">
+                            <canvas id="comparison-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Anomalies Detected -->
+                    <div class="card span-1">
+                        <h3>⚠️ Anomalies</h3>
+                        <div id="anomalies-list" class="anomalies-list">
+                            <div class="loading">Loading...</div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Heatmap -->
+                    <div class="card span-3">
+                        <h3>🔥 Activity Heatmap</h3>
+                        <div id="heatmap-container" class="heatmap-container">
+                            <div class="loading">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Player Analytics Tab -->
+            <section id="players-tab" class="tab-panel">
+                <div class="section-header">
+                    <h2>Player Behavior Analytics</h2>
+                    <p>Learning effectiveness and engagement metrics</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Summary Stats -->
+                    <div class="card span-3">
+                        <div class="stat-grid">
+                            <div class="stat-card">
+                                <span class="stat-value" id="stat-sessions">0</span>
+                                <span class="stat-label">Total Sessions</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value" id="stat-queries">0</span>
+                                <span class="stat-label">Total Queries</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value" id="stat-success">0%</span>
+                                <span class="stat-label">Success Rate</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value" id="stat-avg-levels">0</span>
+                                <span class="stat-label">Avg Levels/Session</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Funnel Chart -->
+                    <div class="card span-2">
+                        <h3>📉 Level Funnel</h3>
+                        <div class="chart-container">
+                            <canvas id="funnel-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Error Distribution -->
+                    <div class="card span-1">
+                        <h3>❌ Top Errors</h3>
+                        <div id="errors-list" class="errors-list">
+                            <div class="loading">Loading...</div>
+                        </div>
+                    </div>
+
+                    <!-- Learning Curve -->
+                    <div class="card span-2">
+                        <h3>📚 Learning Curve</h3>
+                        <div class="chart-container">
+                            <canvas id="learning-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Recent Sessions -->
+                    <div class="card span-1">
+                        <h3>🕐 Recent Sessions</h3>
+                        <div id="recent-sessions" class="sessions-list">
+                            <div class="loading">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Configuration Tab -->
+            <section id="config-tab" class="tab-panel">
+                <div class="section-header">
+                    <h2>Analytics Configuration</h2>
+                    <p>Adjust scoring weights and thresholds</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card span-2">
+                        <h3>⚖️ Scoring Weights</h3>
+                        <div id="config-form" class="config-form">
+                            <div class="loading">Loading...</div>
+                        </div>
+                        <button id="save-config" class="btn-primary">Save Changes</button>
+                    </div>
+
+                    <div class="card span-1">
+                        <h3>ℹ️ About Scoring</h3>
+                        <div class="info-text">
+                            <p>The suspicion score is calculated by summing weighted signals:</p>
+                            <ul>
+                                <li><strong>Criminal Record:</strong> Fixed points for prior convictions</li>
+                                <li><strong>Crime Window Calls:</strong> Points per call during crime time</li>
+                                <li><strong>High Transactions:</strong> Points for transactions above threshold</li>
+                                <li><strong>Bank CCTV:</strong> Points for sightings at crime location</li>
+                                <li><strong>Call Volume:</strong> Points for above-average activity</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <p>SQL Detective Analytics Dashboard v1.0 | Admin Access Only</p>
+    </footer>
+
+    <script src="/analytics/js/dashboard.js" type="module"></script>
+</body>
+
+</html>

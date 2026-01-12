@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Detective: The Data Crime Investigation Game</title>
+    <meta name="description"
+        content="An immersive SQL learning game where players solve crimes using database queries in a 3D noir detective environment.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/sql-editor.css">
+    <link rel="stylesheet" href="css/ui-panels.css">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-icon">🔍</div>
+            <h1>SQL DETECTIVE</h1>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p class="loading-text">Initializing Investigation...</p>
+        </div>
+    </div>
+
+    <!-- Main 3D Canvas -->
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+    </div>
+
+    <!-- HUD Overlay -->
+    <div id="hud">
+        <div class="hud-top">
+            <div class="level-indicator">
+                <span class="level-badge">LEVEL <span id="current-level">1</span></span>
+                <span class="level-title" id="level-title">The Missing Witness</span>
+            </div>
+            <div class="hud-actions">
+                <button id="btn-progress" class="hud-btn" title="Level Progress">🚪</button>
+                <button id="btn-help" class="hud-btn" title="Help">❓</button>
+                <button id="btn-sound" class="hud-btn" title="Toggle Sound">🔊</button>
+                <button id="btn-menu" class="hud-btn" title="Menu">☰</button>
+            </div>
+        </div>
+
+        <div class="hud-bottom">
+            <div class="interaction-hint" id="interaction-hint">
+                <span class="hint-icon">👆</span>
+                <span class="hint-text">Click objects to interact</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Panel (Case File) -->
+    <div id="story-panel" class="panel hidden">
+        <div class="panel-header">
+            <h2>📁 CASE FILE</h2>
+            <button class="panel-close">&times;</button>
+        </div>
+        <div class="panel-content">
+            <div class="case-number" id="case-number">CASE #2024-0315</div>
+            <div class="story-text" id="story-text"></div>
+            <div class="objective-box">
+                <h3>🎯 OBJECTIVE</h3>
+                <p id="objective-text"></p>
+            </div>
+            <div class="concepts-box">
+                <h3>📚 SQL CONCEPTS</h3>
+                <div id="sql-concepts"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Evidence Board Panel -->
+    <div id="evidence-panel" class="panel hidden">
+        <div class="panel-header">
+            <h2>🗂️ DATABASE TABLES</h2>
+            <button class="panel-close">&times;</button>
+        </div>
+        <div class="panel-content">
+            <p class="evidence-intro">Available database tables for this level:</p>
+            <div id="tables-list" class="tables-grid"></div>
+            <div id="table-preview" class="table-preview hidden">
+                <h3>📋 Table Preview: <span id="preview-table-name"></span></h3>
+                <div id="table-schema"></div>
+                <div id="table-sample"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SQL Editor Panel -->
+    <div id="sql-editor-panel" class="panel sql-panel hidden">
+        <div class="panel-header">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <h2>💻 SQL TERMINAL</h2>
+            </div>
+            <button class="panel-close">&times;</button>
+        </div>
+        <div class="panel-content">
+            <div class="editor-section">
+                <div class="editor-toolbar">
+                    <span class="toolbar-label">Write your query:</span>
+                    <button id="btn-clear-query" class="toolbar-btn">Clear</button>
+                    <button id="btn-hint" class="toolbar-btn">💡 Hint</button>
+                </div>
+                <div class="editor-wrapper">
+                    <div class="line-numbers" id="line-numbers">1</div>
+                    <textarea id="sql-input" placeholder="SELECT * FROM suspects WHERE..."></textarea>
+                </div>
+            </div>
+            <div class="editor-actions">
+                <button id="btn-execute" class="action-btn execute">▶ EXECUTE</button>
+                <button id="btn-submit" class="action-btn submit">✓ SUBMIT ANSWER</button>
+            </div>
+            <div class="results-section">
+                <div class="results-header">
+                    <h3>📊 RESULTS</h3>
+                    <span id="results-stats" class="results-stats"></span>
+                </div>
+                <div id="results-container" class="results-container">
+                    <div class="results-placeholder">
+                        Execute a query to see results here...
+                    </div>
+                </div>
+                <div id="feedback-container" class="feedback-container hidden">
+                    <div id="feedback-message"></div>
+                    <div id="feedback-hints" class="feedback-hints"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level Complete Modal -->
+    <div id="level-complete-modal" class="modal hidden">
+        <div class="modal-content success-modal">
+            <div class="success-icon">🎉</div>
+            <h2>CASE PROGRESS</h2>
+            <p id="success-message"></p>
+            <button id="btn-next-level" class="modal-btn">Continue Investigation →</button>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal hidden">
+        <div class="modal-content help-modal">
+            <h2>🔍 How to Play</h2>
+            <div class="help-content">
+                <div class="help-item">
+                    <span class="help-icon">📁</span>
+                    <div>
+                        <h4>Case Files (Desk)</h4>
+                        <p>Click the desk to read the case story and objective</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <span class="help-icon">📌</span>
+                    <div>
+                        <h4>Evidence Board</h4>
+                        <p>Click to view available database tables</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <span class="help-icon">💻</span>
+                    <div>
+                        <h4>Computer Terminal</h4>
+                        <p>Click to open the SQL editor and solve the case</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <span class="help-icon">🚪</span>
+                    <div>
+                        <h4>Level Progress</h4>
+                        <p>Complete levels to unlock new SQL concepts</p>
+                    </div>
+                </div>
+            </div>
+            <div class="sql-rules">
+                <h3>⚠️ SQL Rules</h3>
+                <p>Only <code>SELECT</code> queries are allowed. You cannot modify the database.</p>
+            </div>
+            <button class="modal-btn modal-close-btn">Got it!</button>
+        </div>
+    </div>
+
+    <!-- Menu Modal -->
+    <div id="menu-modal" class="modal hidden">
+        <div class="modal-content menu-modal">
+            <h2>☰ Menu</h2>
+            <div class="menu-items">
+                <button id="menu-restart" class="menu-item">🔄 Restart Game</button>
+                <button id="menu-levels" class="menu-item">📋 Level Select</button>
+                <button id="menu-analytics" class="menu-item">📊 Analytics (Admin)</button>
+                <button id="menu-about" class="menu-item">ℹ️ About</button>
+            </div>
+            <button class="modal-btn modal-close-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- Level Select Modal -->
+    <div id="level-select-modal" class="modal hidden">
+        <div class="modal-content level-select-modal">
+            <h2>📋 Level Select</h2>
+            <div id="levels-grid" class="levels-grid">
+                <!-- Levels will be populated dynamically -->
+            </div>
+            <button class="modal-btn modal-close-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="about-modal" class="modal hidden">
+        <div class="modal-content about-modal">
+            <h2>ℹ️ About SQL Detective</h2>
+            <div class="about-content">
+                <p><strong>SQL Detective: The Data Crime Investigation Game</strong></p>
+                <p>An immersive SQL learning experience where you solve crimes using database queries in a noir
+                    detective environment.</p>
+                <h3>🎯 Features</h3>
+                <ul>
+                    <li>7 progressive levels teaching SQL concepts</li>
+                    <li>Interactive 3D environment</li>
+                    <li>Real database with realistic crime data</li>
+                    <li>Instant feedback on your queries</li>
+                </ul>
+                <h3>📚 SQL Concepts Covered</h3>
+                <p>SELECT, WHERE, JOIN, GROUP BY, HAVING, ORDER BY, Subqueries, COUNT, SUM, AVG</p>
+                <h3>👤 Created By</h3>
+                <p>SQL Detective Game Project</p>
+            </div>
+            <button class="modal-btn modal-close-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- Level Progress Modal -->
+    <div id="progress-modal" class="modal hidden">
+        <div class="modal-content progress-modal">
+            <h2>🚪 Level Progress</h2>
+            <div id="progress-details" class="progress-details">
+                <!-- Progress will be populated dynamically -->
+            </div>
+            <button class="modal-btn modal-close-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- Three.js and Game Scripts -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
